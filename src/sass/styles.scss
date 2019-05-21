@@ -1,0 +1,13 @@
+@import 'colors';
+
+// text fonts
+@import '../assets/fonts/noto-sans/styles.css';
+@import '../assets/fonts/segoe-ui/styles.css';
+@import '../assets/fonts/metronic-pro/styles.css';
+
+html, body {
+  height: 100%;
+  margin: 0;
+
+  font-family: metronic-pro, 'Segoe UI', segoe-ui, Tahoma, Geneva, Verdana, sans-serif;
+}

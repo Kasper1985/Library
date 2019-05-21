@@ -1,0 +1,37 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+
+  .header {
+    flex: 0 1 4rem;
+  }
+
+  .main {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: row;
+
+    .nav-panel {
+      flex: 0 1 auto;
+      width: 200px;
+      transition: width .5s ease;
+
+      &.collapsed {
+        width: 50px;
+      }
+    }
+
+    .content {
+      flex: 1 1 auto;
+    }
+  }
+
+  .footer {
+    flex: 0 1 4rem;
+  }
+}
