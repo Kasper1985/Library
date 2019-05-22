@@ -1,7 +1,7 @@
 // Angular modules
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 // NGX Modules
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -26,12 +26,13 @@ import { NavPanelComponent } from './nav-panel/nav-panel.component';
   imports: [
     // Angular modules
     BrowserModule,
+    HttpClientModule,
 
     // NGX modules
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: createTranslateLoader,
+        useFactory: (createTranslateLoader),
         deps: [HttpClient]
       }
     }),

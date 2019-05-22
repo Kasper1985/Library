@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { INavItem } from '../models';
 
 @Component({
   selector: 'app-nav-panel',
@@ -6,10 +7,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./nav-panel.component.scss']
 })
 export class NavPanelComponent implements OnInit {
+  navItems: INavItem[] = [
+    { id: 0, title: 'NAVIGATION.CATALOGUE', icon: '', link: ''},
+    { id: 1, title: 'NAVIGATION.BOOKING', icon: '', link: ''},
+    { id: 2, title: 'NAVIGATION.LENDING', icon: '', link: ''}
+  ];
+  activeItemId = 0;
+  menuState: 'expanded' | 'collapsed' = 'collapsed';
 
   constructor() { }
 
   ngOnInit() {
   }
 
+  onToggleMenu(toggler: HTMLInputElement) {
+    this.menuState = toggler.checked ? 'expanded' : 'collapsed';
+  }
 }

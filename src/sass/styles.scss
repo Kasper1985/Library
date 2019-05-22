@@ -10,4 +10,9 @@ html, body {
   margin: 0;
 
   font-family: metronic-pro, 'Segoe UI', segoe-ui, Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.4;
+}
+
+* {
+  box-sizing: border-box; // The size of all element with include the size of borders
 }

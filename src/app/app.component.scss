@@ -9,29 +9,38 @@
 
   .header {
     flex: 0 1 4rem;
+    background-color: lightcoral;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .main {
     flex: 1 1 auto;
     display: flex;
     flex-direction: row;
+    background-color: lightpink;
 
     .nav-panel {
       flex: 0 1 auto;
-      width: 200px;
       transition: width .5s ease;
-
-      &.collapsed {
-        width: 50px;
-      }
+      background-color: lightgrey;
     }
 
     .content {
       flex: 1 1 auto;
+      background-color: lightyellow;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 
   .footer {
     flex: 0 1 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: lightgoldenrodyellow;
   }
 }
