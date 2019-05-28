@@ -1,4 +1,8 @@
 {
+  "APPLICATION": {
+    "NAME": "Bücherei"
+  },
+
   "NAVIGATION": {
     "CATALOGUE": "Katalog",
     "BOOKING": "Reservierung",

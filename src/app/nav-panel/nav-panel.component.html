@@ -2,9 +2,9 @@
   <input type="checkbox" class="toggler" (click)="onToggleMenu($event.target)"/>
   <div class="hamburger"><div></div></div>
 </div>
-<div class="navigation-menu" [class.collapsed]="menuState === 'collapsed'">
+<div kendoTooltip position="right" class="navigation-menu" [class.collapsed]="menuState === 'collapsed'">
   <div *ngFor="let item of navItems" class="navigation-item" [class.active]="item.id === activeItemId" title="{{ item.title | translate }}">
-    <span class="item.icon"></span>
+    <img class="icon" alt="item.title" src="../../assets/images/image-placeholder.jpg"/>
     <pre>{{ item.title | translate }}</pre>
   </div>
 </div>

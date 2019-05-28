@@ -1,3 +1,21 @@
-<p>
-  header works!
-</p>
+<div class="main">
+  <div class="loading" [class.on]="false"></div>
+  <div class="logo">
+    <img alt="logo" src="../../assets/images/books.png" />
+    <h2>{{ 'APPLICATION.NAME' | translate }}</h2>
+  </div>
+  <div class="user-area">
+    <kendo-dropdownbutton [data]="languages" class="dropdown-language">
+      <img class="lang" alt="{{selectedLanguage}}" src="../../assets/languages/{{selectedLanguage}}.png" />
+
+      <ng-template kendoDropDownButtonItemTemplate let-language>
+        <div (click)="setLanguage(language)" style="cursor: pointer;">
+          <img alt="{{language}}" src="../../assets/languages/{{language}}.png" style="height: 1rem"/>
+          <span style="padding-left: 5px; text-transform: uppercase">{{language}}</span>
+        </div>
+      </ng-template>
+    </kendo-dropdownbutton>
+
+    <img alt="avatar" src="../../assets/images/avatar.png" />
+  </div>
+</div>

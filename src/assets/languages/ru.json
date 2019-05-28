@@ -1,0 +1,11 @@
+{
+  "APPLICATION": {
+    "NAME": "Библиотека"
+  },
+
+  "NAVIGATION": {
+    "CATALOGUE": "Каталог",
+    "BOOKING": "Заказы",
+    "LENDING": "Прокат"
+  }
+}

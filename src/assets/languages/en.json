@@ -1,4 +1,8 @@
 {
+  "APPLICATION": {
+    "NAME": "Library"
+  },
+
   "NAVIGATION": {
     "CATALOGUE": "Catalogue",
     "BOOKING": "Booking",

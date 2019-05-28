@@ -14,6 +14,15 @@ import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { NavPanelComponent } from './nav-panel/nav-panel.component';
+import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ButtonsModule } from '@progress/kendo-angular-buttons';
+import { TooltipModule } from '@progress/kendo-angular-tooltip';
+import { LoginComponent } from './login/login.component';
+
+
+
+
 
 @NgModule({
   declarations: [
@@ -21,7 +30,8 @@ import { NavPanelComponent } from './nav-panel/nav-panel.component';
     HomeComponent,
     HeaderComponent,
     FooterComponent,
-    NavPanelComponent
+    NavPanelComponent,
+    LoginComponent
   ],
   imports: [
     // Angular modules
@@ -37,7 +47,15 @@ import { NavPanelComponent } from './nav-panel/nav-panel.component';
       }
     }),
 
-    AppRoutingModule
+    AppRoutingModule,
+
+    DropDownsModule,
+
+    BrowserAnimationsModule,
+
+    ButtonsModule,
+
+    TooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]

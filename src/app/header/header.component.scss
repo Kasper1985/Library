@@ -1,0 +1,52 @@
+.main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 1.5rem;
+  background-color: rgba(235, 124, 235, 0.4);
+
+  .loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: red;
+    z-index: 1;
+    visibility: hidden;
+
+    &.on {
+      visibility: visible;
+    }
+  }
+
+  .logo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    img {
+      height: 60px;
+      padding-right: 2rem;
+    }
+  }
+
+  .user-area {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .lang {
+      height: 1rem;
+    }
+
+    .dropdown-language {
+      margin-right: 10px;
+    }
+
+    img {
+      height: 40px;
+    }
+  }
+}

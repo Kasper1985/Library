@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { INavItem } from '../models';
+import { TooltipDirective } from '@progress/kendo-angular-tooltip';
 
 @Component({
   selector: 'app-nav-panel',
@@ -7,6 +8,8 @@ import { INavItem } from '../models';
   styleUrls: ['./nav-panel.component.scss']
 })
 export class NavPanelComponent implements OnInit {
+  @ViewChild(TooltipDirective) public toolTipDirective: TooltipDirective;
+
   navItems: INavItem[] = [
     { id: 0, title: 'NAVIGATION.CATALOGUE', icon: '', link: ''},
     { id: 1, title: 'NAVIGATION.BOOKING', icon: '', link: ''},
@@ -22,5 +25,6 @@ export class NavPanelComponent implements OnInit {
 
   onToggleMenu(toggler: HTMLInputElement) {
     this.menuState = toggler.checked ? 'expanded' : 'collapsed';
+    this.toolTipDirective.showOn = this.menuState === 'collapsed' ? 'hover' : 'none';
   }
 }

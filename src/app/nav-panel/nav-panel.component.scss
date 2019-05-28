@@ -1,12 +1,5 @@
-:root {
-  --primary-color: rgba(13, 110, 139, .75);
-  --overlay-color: rgba(24, 39, 51, .85);
-  --menu-speed: .75s;
-}
-
 .collapse-button {
   position: relative;
-  background-color: red;
   height: 30px;
   padding: 0;
   margin: 0;
@@ -46,7 +39,6 @@
     width: 30px;
     height: 30px;
     padding: .3rem;
-    background: rgba(13, 110, 139, .75);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -90,18 +82,33 @@
   flex-direction: column;
   transition: width .4s ease;
 
-  background-color: lightcyan;
-
   &.collapsed {
     width: 30px;
+
+    .navigation-item pre {
+      opacity: 0;
+    }
   };
 
   .navigation-item {
+    display: flex;
+    align-items: center;
     text-transform: uppercase;
     cursor: pointer;
 
     &:hover {
-      background-color: #dfdfdf;
+      background: rgba(53, 150, 179, .75);
+    }
+
+    & > pre {
+      font-size: 12pt;
+      padding-left: 5px;
+      font-family: inherit;
+    }
+
+    .icon {
+      width: 28px;
+      padding: 2px;
     }
   }
 }

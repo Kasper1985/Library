@@ -9,10 +9,13 @@
 
   .header {
     flex: 0 1 4rem;
-    background-color: lightcoral;
     display: flex;
     align-items: center;
     justify-content: center;
+
+    & > * {
+      width: 100%;
+    }
   }
 
   .main {
@@ -24,7 +27,7 @@
     .nav-panel {
       flex: 0 1 auto;
       transition: width .5s ease;
-      background-color: lightgrey;
+      background: rgba(13, 110, 139, .75);
     }
 
     .content {
