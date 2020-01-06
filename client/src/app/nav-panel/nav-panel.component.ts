@@ -8,7 +8,7 @@ import { TooltipDirective } from '@progress/kendo-angular-tooltip';
   styleUrls: ['./nav-panel.component.scss']
 })
 export class NavPanelComponent implements OnInit {
-  @ViewChild(TooltipDirective) public toolTipDirective: TooltipDirective;
+  @ViewChild(TooltipDirective, { static: false }) public toolTipDirective: TooltipDirective;
 
   navItems: INavItem[] = [
     { id: 0, title: 'NAVIGATION.CATALOGUE', icon: '', link: ''},
