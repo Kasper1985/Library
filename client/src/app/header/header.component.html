@@ -1,3 +1,21 @@
+<div class="header">
+  <section>
+    <div class="hamburger" [class.is-active]="hamburgerState=='open'" (click)="hamburgerClick()">
+      <div class="hamburger-box">
+        <div class="hamburger-inner"></div>
+      </div>
+    </div>
+    <img class="logo" alt="Library" src="assets/images/books.png" />
+    <h2>{{ 'APPLICATION.NAME' | translate }}</h2>
+  </section>
+
+  <section>
+    <p>Herr Max Mustermann</p>
+  </section>
+</div>
+
+
+<!--
 <div class="main">
   <div class="loading" [class.on]="false"></div>
   <div class="logo">
@@ -19,3 +37,4 @@
     <img alt="avatar" src="../../assets/images/avatar.png" />
   </div>
 </div>
+-->

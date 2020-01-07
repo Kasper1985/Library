@@ -5,14 +5,34 @@
 @import '../assets/fonts/segoe-ui/styles.css';
 @import '../assets/fonts/metronic-pro/styles.css';
 
-html, body {
-  height: 100%;
+body {
   margin: 0;
+  height: 100vh;
+  box-sizing: border-box;
 
   font-family: metronic-pro, 'Segoe UI', segoe-ui, Tahoma, Geneva, Verdana, sans-serif;
-  line-height: 1.4;
-}
 
-* {
-  box-sizing: border-box; // The size of all element with include the size of borders
+  app-root {
+    height: 100%;
+    display: grid;
+    grid-template-rows: 50px 1fr 50px;
+    grid-template-columns: auto 1fr;
+    grid-template-areas: "top-bar top-bar" "side-bar content" "bottom-bar bottom-bar";
+
+    .top-bar {
+      grid-area: top-bar;
+    }
+
+    .side-bar {
+      grid-area: side-bar;
+    }
+
+    .content {
+      grid-area: content;
+    }
+
+    .bottom-bar {
+      grid-area: bottom-bar;
+    }
+  }
 }

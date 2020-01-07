@@ -6,6 +6,7 @@
       "request": "launch",
       "name": "Launch in Chrome",
       "url": "http://localhost:4200",
+      "port": 4711,
       "webRoot": "${workspaceFolder}"
     },
     {
@@ -15,6 +16,19 @@
       "url": "http://localhost:4200",
       "port": 9222,
       "webRoot": "${workspaceFolder}"
+    },
+    {
+      "type": "firefox",
+      "request": "launch",
+      "name": "Launch in Firefox",
+      "url": "http://localhost:4200",
+      "reAttach": true
+    },
+    {
+      "type": "firefox",
+      "request": "attach",
+      "name": "Attach to Firefox",
+      "url": "http://localhost:4200",
     }
   ]
 }

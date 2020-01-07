@@ -7,6 +7,9 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+  public hamburgerState: 'open'|'close' = 'close';
+
+
   public languages: Array<string> = [ 'en', 'de', 'ua', 'ru' ];
   public selectedLanguage: string;
 
@@ -22,5 +25,12 @@ export class HeaderComponent implements OnInit {
       this.selectedLanguage = this.languages[0];
     }
     this.translate.setDefaultLang(this.selectedLanguage);
+  }
+
+  /**
+   * Fires, whenever a hamburger for a side navigation will be clicked
+   */
+  hamburgerClick() {
+    this.hamburgerState = this.hamburgerState === 'open' ? 'close' : 'open';
   }
 }
