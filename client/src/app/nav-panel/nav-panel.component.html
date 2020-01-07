@@ -1,3 +1,13 @@
+<div class="container">
+  <section [class.open]="navState == 'open'">
+    <div class="navigation-item" *ngFor="let item of navItems" [class.active]="item.active" (click)="clickNavItem(item)">
+      <span>{{item.title | translate}}</span>
+    </div>
+  </section>
+</div>
+
+
+<!--
 <div class="collapse-button">
   <input type="checkbox" class="toggler" (click)="onToggleMenu($event.target)"/>
   <div class="hamburger"><div></div></div>
@@ -8,3 +18,4 @@
     <pre>{{ item.title | translate }}</pre>
   </div>
 </div>
+-->

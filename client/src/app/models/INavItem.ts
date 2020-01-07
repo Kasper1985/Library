@@ -1,6 +1,6 @@
 export interface INavItem {
-  id?: number;
+  active: boolean;
   title: string;
-  icon: any;
+  icon?: any;
   link: string;
 }

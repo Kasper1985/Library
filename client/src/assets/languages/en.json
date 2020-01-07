@@ -3,7 +3,7 @@
     "NAME": "Library"
   },
 
-  "NAVIGATION": {
+  "NAV": {
     "CATALOGUE": "Catalogue",
     "BOOKING": "Booking",
     "LENDING": "Lending"

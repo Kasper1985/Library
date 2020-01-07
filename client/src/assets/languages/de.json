@@ -3,7 +3,7 @@
     "NAME": "Bücherei"
   },
 
-  "NAVIGATION": {
+  "NAV": {
     "CATALOGUE": "Katalog",
     "BOOKING": "Reservierung",
     "LENDING": "Ausleihe"

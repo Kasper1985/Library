@@ -11,7 +11,7 @@ $hamburger-color          : black;
   position: relative;
   height: 100%;
   background: #e3e3e3;
-  padding: 0 1em;
+  padding: 0 5px;
 
   display: flex;
   justify-content: space-between;
@@ -27,10 +27,6 @@ $hamburger-color          : black;
   transition-property: opacity, filter;
   transition-duration: .15s;
   transition-timing-function: linear;
-
-  &:hover {
-    opacity: .7;
-  }
 
   .hamburger-box {
     width: 30px;

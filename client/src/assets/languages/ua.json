@@ -3,7 +3,7 @@
     "NAME": "Библiотека"
   },
 
-  "NAVIGATION": {
+  "NAV": {
     "CATALOGUE": "Каталог",
     "BOOKING": "Замовлення",
     "LENDING": "Прокат"

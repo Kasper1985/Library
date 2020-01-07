@@ -1,3 +1,43 @@
+.container {
+  height: 100%;
+  position: relative;
+
+  section {
+    height: 100%;
+    background: #f0f0f0;
+    position: absolute;
+
+    transform: translateX(-100%);
+    transition: transform .3s ease;
+
+    &.open {
+      transform: translateX(0);
+    }
+  }
+}
+
+.navigation-item {
+  padding: .5em .5em;
+  cursor: pointer;
+  opacity: .5;
+
+  transition: opacity .75s ease;
+
+  &.active {
+    background: #f9f9f9;
+    opacity: 1;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+
+
+
+
+/*
 .collapse-button {
   position: relative;
   height: 30px;
@@ -112,3 +152,4 @@
     }
   }
 }
+*/
