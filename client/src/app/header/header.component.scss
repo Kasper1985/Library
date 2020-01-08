@@ -1,6 +1,7 @@
 @import './../../sass/colors.scss';
 
 // Settings
+$user-avatar-size         : 40px;
 
 // Hamburger
 $hamburger-layer-height   : 4px;
@@ -105,6 +106,23 @@ img {
 section {
   display: flex;
   align-items: center;
+}
+
+.user-name {
+  display: none;
+}
+
+.user-avatar {
+  width: $user-avatar-size;
+  height: $user-avatar-size;
+  border-radius: $user-avatar-size / 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.user-avatar-default {
+  background: #a9a9a9;
 }
 
 // Tablet size: small(600px - 1023px)

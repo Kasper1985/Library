@@ -10,7 +10,14 @@
   </section>
 
   <section>
-    <p>Herr Max Mustermann</p>
+    <div *ngIf="this.loggedInUser" class="user-info">
+      <p class="user-name">{{this.loggedInUser.nameFirst}}</p>
+      <span *ngIf="!this.loggedInUser.avatar" class="user-avatar user-avatar-default" (click)="clickAvatar()">{{this.loggedInUser.nameFirst[0]}}</span>
+      <img *ngIf="this.loggedInUser.avatar" class="user-avatar" src="{{this.loggedInUser.avatar}}" alt="{{this.loggedInUser.nameFirst}}" />
+    </div>
+    <div *ngIf="!this.loggedInUser" class="user-info">
+      <button kendoButton (click)="logIn()">Login</button>
+    </div>
   </section>
 </div>
 

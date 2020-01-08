@@ -1,15 +1,16 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
+import { Observable, of } from 'rxjs';
 
 import { IUser } from '../models';
 import { CookieService } from './cookie.service';
+import { EventService } from './event.service';
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
   private readonly STORAGE_USER = 'user';
 
-  @Output() userLogInEmitter: EventEmitter<IUser> = new EventEmitter();
-
-  constructor(private cookieService: CookieService) {}
+  constructor(private cookieService: CookieService,
+              private eventService: EventService) {}
 
   /**
    * Currently logged in user.
@@ -21,7 +22,7 @@ export class AuthService {
   /**
    * User login process provider.
    */
-  public login(login: string, password: string) {
+  public login(login: string, password: string): Observable<IUser> {
     // Do login request and get user data
 
     // Mockup user for testing
@@ -38,7 +39,9 @@ export class AuthService {
     } else {
       localStorage.removeItem(this.STORAGE_USER);
     }
-    this.userLogInEmitter.emit(user);
+    this.eventService.userLoggedInEvent.emit(user);
+
+    return of(user);
   }
 
   /**
@@ -46,6 +49,6 @@ export class AuthService {
    */
   public logout() {
     localStorage.removeItem(this.STORAGE_USER);
-    this.userLogInEmitter.emit(null);
+    this.eventService.userLoggedInEvent.emit(null);
   }
 }

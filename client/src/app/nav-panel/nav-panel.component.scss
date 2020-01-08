@@ -1,18 +1,19 @@
 .container {
   height: 100%;
   position: relative;
+  z-index: 1;
+}
 
-  section {
-    height: 100%;
-    background: #f0f0f0;
-    position: absolute;
+section {
+  height: 100%;
+  background: #f0f0f0;
+  position: absolute;
 
-    transform: translateX(-100%);
-    transition: transform .3s ease;
+  transform: translateX(-100%);
+  transition: transform .3s ease;
 
-    &.open {
-      transform: translateX(0);
-    }
+  &.open {
+    transform: translateX(0);
   }
 }
 
@@ -30,6 +31,18 @@
 
   &:hover {
     opacity: 1;
+  }
+}
+
+// Tablet size: small(600px - 1023px)
+@media screen and (min-width: 600px) {
+}
+
+// Desktop sizes: medium(1024px -1439px) / large(1440px - 1919px) / xlarge(1920px - ∞)
+@media screen and (min-width: 1024px) {
+  section {
+    position: initial;
+    transform: translateX(0);
   }
 }
 

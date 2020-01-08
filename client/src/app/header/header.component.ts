@@ -1,7 +1,9 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
-import { EventService } from './../services';
+import { EventService, AuthService } from './../services';
+
+import { IUser } from '../models';
 
 @Component({
   selector: 'app-header',
@@ -10,23 +12,15 @@ import { EventService } from './../services';
 })
 export class HeaderComponent implements OnInit {
   public hamburgerState: 'open'|'close' = 'close';
+  public loggedInUser: IUser;
 
-  public languages: Array<string> = [ 'en', 'de', 'ua', 'ru' ];
-  public selectedLanguage: string;
-
-  constructor(private translate: TranslateService,
-              private eventService: EventService) { }
+  constructor(private eventService: EventService,
+              private authService: AuthService,
+              private router: Router) { }
 
   ngOnInit() {
-    this.setLanguage(this.translate.getDefaultLang());
-  }
-
-  setLanguage(value: string) {
-    this.selectedLanguage = this.languages.find(l => l === value);
-    if (!this.selectedLanguage) {
-      this.selectedLanguage = this.languages[0];
-    }
-    this.translate.setDefaultLang(this.selectedLanguage);
+    this.loggedInUser = this.authService.loggedInUser;
+    this.eventService.userLoggedInEvent.subscribe((user: IUser) => this.loggedInUser = user);
   }
 
   /**
@@ -35,5 +29,13 @@ export class HeaderComponent implements OnInit {
   hamburgerClick() {
     this.hamburgerState = this.hamburgerState === 'open' ? 'close' : 'open';
     this.eventService.hamburgerToggleEvent.emit(this.hamburgerState);
+  }
+
+  logIn() {
+    this.router.navigate(['login']);
+  }
+
+  clickAvatar() {
+    this.authService.logout();
   }
 }
