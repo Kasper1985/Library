@@ -1,46 +1,48 @@
-<section *ngIf="isLogin">
-  <h1>Login</h1>
-  <form [formGroup]="loginForm" (ngSubmit)="logIn()">
-    <kendo-textbox-container floatingLabel="Email">
-      <input kendoTextBox formControlName="email"/>
-    </kendo-textbox-container>
-    <kendo-textbox-container floatingLabel="Password">
-      <input kendoTextBox type="password" formControlName="password" autocomplete="new-password"/>
-    </kendo-textbox-container>
-    <div class="buttons">
-      <button [disabled]="loading" kendoButton [primary]="true">
-        <span *ngIf="loading" class="k-i-loading"></span>
-        Login
-      </button>
-      <span (click)="toggleRegister()">Register</span>
-    </div>
-  </form>
-</section>
+<div class="content">
+  <section *ngIf="isLogin">
+    <h1>Login</h1>
+    <form [formGroup]="loginForm" (submit)="logIn()">
+      <kendo-textbox-container floatingLabel="Email">
+        <input kendoTextBox formControlName="email"/>
+      </kendo-textbox-container>
+      <kendo-textbox-container floatingLabel="Password">
+        <input kendoTextBox type="password" formControlName="password" autocomplete="new-password"/>
+      </kendo-textbox-container>
+      <div class="buttons">
+        <button [disabled]="loading" kendoButton [primary]="true">
+          <span *ngIf="loading" class="k-i-loading"></span>
+          Login
+        </button>
+        <span (click)="toggleRegister()">Register</span>
+      </div>
+    </form>
+  </section>
 
-<section *ngIf="!isLogin">
-  <h1>Register</h1>
-  <form [formGroup]="registerForm" (ngSubmit)="register()">
-    <kendo-textbox-container floatingLabel="First name">
-      <input kendoTextBox formControlName="nameFirst" />
-    </kendo-textbox-container>
-    <kendo-textbox-container floatingLabel="Last name">
-      <input kendoTextBox fromControlName="nameLast" />
-    </kendo-textbox-container>
-    <kendo-textbox-container floatingLabel="Email">
-      <input kendoTextBox formControlName="email" />
-    </kendo-textbox-container>
-    <kendo-textbox-container floatingLabel="Password">
-      <input kendoTextBox formControlName="password" type="password" autocomplete="new-password" />
-    </kendo-textbox-container>
-    <kendo-textbox-container floatingLabel="Confirm password">
-      <input kendoTextBox formControlName="passwordConfirm" type="password" />
-    </kendo-textbox-container>
-    <div class="buttons">
-      <button [disabled]="loading" kendoButton [primary]="true">
-        <span *ngIf="loading" class="k-i-loading"></span>
-        Register
-      </button>
-      <span (click)="toggleRegister()">Cancel</span>
-    </div>
-  </form>
-</section>
+  <section *ngIf="!isLogin">
+    <h1>Register</h1>
+    <form [formGroup]="registerForm" (submit)="register()">
+      <kendo-textbox-container floatingLabel="First name">
+        <input kendoTextBox formControlName="nameFirst" />
+      </kendo-textbox-container>
+      <kendo-textbox-container floatingLabel="Last name">
+        <input kendoTextBox fromControlName="nameLast" />
+      </kendo-textbox-container>
+      <kendo-textbox-container floatingLabel="Email">
+        <input kendoTextBox formControlName="email" />
+      </kendo-textbox-container>
+      <kendo-textbox-container floatingLabel="Password">
+        <input kendoTextBox formControlName="password" type="password" autocomplete="new-password" />
+      </kendo-textbox-container>
+      <kendo-textbox-container floatingLabel="Confirm password">
+        <input kendoTextBox formControlName="passwordConfirm" type="password" />
+      </kendo-textbox-container>
+      <div class="buttons">
+        <button [disabled]="loading" kendoButton [primary]="true">
+          <span *ngIf="loading" class="k-i-loading"></span>
+          Register
+        </button>
+        <span (click)="toggleRegister()">Cancel</span>
+      </div>
+    </form>
+  </section>
+</div>

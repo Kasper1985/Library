@@ -4,8 +4,15 @@
   },
 
   "NAV": {
+    "HOME": "Home",
     "CATALOGUE": "Katalog",
     "BOOKING": "Reservierung",
     "LENDING": "Ausleihe"
+  },
+
+  "CATALOGUE": {
+    "FILTER": {
+      "TITLE": "Titel"
+    }
   }
 }

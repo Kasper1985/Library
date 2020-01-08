@@ -4,6 +4,7 @@
   },
 
   "NAV": {
+    "HOME": "Home",
     "CATALOGUE": "Catalogue",
     "BOOKING": "Booking",
     "LENDING": "Lending"

@@ -18,9 +18,10 @@ export class NavPanelComponent implements OnInit {
   @ViewChild(TooltipDirective, { static: false }) public toolTipDirective: TooltipDirective;
 
   navItems: INavItem[] = [
-    { active: false, title: 'NAV.CATALOGUE', link: ''},
-    { active: false, title: 'NAV.BOOKING', link: ''},
-    { active: false, title: 'NAV.LENDING', link: ''}
+    { active: false, title: 'NAV.HOME', link: 'home' },
+    { active: false, title: 'NAV.CATALOGUE', link: 'catalogue' },
+    { active: false, title: 'NAV.BOOKING', link: '' },
+    { active: false, title: 'NAV.LENDING', link: '' }
   ];
   // menuState: 'expanded' | 'collapsed' = 'collapsed';
 

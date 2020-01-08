@@ -24,6 +24,7 @@ import { FooterComponent } from './footer/footer.component';
 import { NavPanelComponent } from './nav-panel/nav-panel.component';
 
 import { LoginComponent } from './login/login.component';
+import { CatalogueComponent } from './catalogue/catalogue.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { LoginComponent } from './login/login.component';
     HeaderComponent,
     FooterComponent,
     NavPanelComponent,
-    LoginComponent
+    LoginComponent,
+    CatalogueComponent
   ],
   imports: [
     // Angular modules

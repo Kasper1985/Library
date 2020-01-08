@@ -1,0 +1,19 @@
+<div class="content">
+  <form [formGroup]="this.searchForm" (submit)="search()">
+    <kendo-textbox-container floatingLabel="{{ 'CATALOGUE.FILTER.TITLE' | translate }}" class="search-text">
+      <input kendoTextBox formControlName="searchText" />
+    </kendo-textbox-container>
+    <button kendoButton [primary]="true" type="submit">S</button>
+    <span>&lt;</span>
+  </form>
+
+  <section class="result">
+    <div class="book" *ngFor="let book of books">
+      <img class="book-cover" src="{{book.cover}}" alt="{{book.title}}"/>
+      <span class="book-title">{{book.title}}</span>
+      <span class="book-author">{{book.author}}</span>
+      <span class="book-year">{{book.year}}</span>
+      <span class="book-exists">{{book.exists}}</span>
+    </div>
+  </section>
+</div>

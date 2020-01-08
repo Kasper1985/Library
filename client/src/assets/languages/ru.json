@@ -4,6 +4,7 @@
   },
 
   "NAV": {
+    "HOME": "Домой",
     "CATALOGUE": "Каталог",
     "BOOKING": "Заказы",
     "LENDING": "Прокат"

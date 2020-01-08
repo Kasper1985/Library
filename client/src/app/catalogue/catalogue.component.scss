@@ -1,0 +1,25 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  padding: 0 1em;
+}
+
+form {
+  display: flex;
+  align-items: flex-end;
+
+  .search-text {
+    flex-grow: 1;
+
+    input {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+
+  .search-text + button {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    margin-right: .5em;
+  }
+}
