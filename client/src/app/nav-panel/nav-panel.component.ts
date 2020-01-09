@@ -18,28 +18,36 @@ export class NavPanelComponent implements OnInit {
   @ViewChild(TooltipDirective, { static: false }) public toolTipDirective: TooltipDirective;
 
   navItems: INavItem[] = [
-    { active: false, title: 'NAV.HOME', link: 'home' },
-    { active: false, title: 'NAV.CATALOGUE', link: 'catalogue' },
-    { active: false, title: 'NAV.BOOKING', link: '' },
-    { active: false, title: 'NAV.LENDING', link: '' }
+    { id: 'home', active: false, title: 'NAV.HOME', link: 'home' },
+    { id: 'catalogue', active: false, title: 'NAV.CATALOGUE', link: 'catalogue' },
+    { id: 'booking', active: false, title: 'NAV.BOOKING', link: '' },
+    { id: 'lending', active: false, title: 'NAV.LENDING', link: '' }
   ];
   // menuState: 'expanded' | 'collapsed' = 'collapsed';
 
   constructor(private router: Router,
               private eventService: EventService) {
     this.eventService.hamburgerToggleEvent.subscribe((state: 'open'|'close') => this.navState = state);
+    this.eventService.pageOpen.subscribe((id: string) => this.selectNavItem(id));
   }
 
   ngOnInit() {
   }
 
   clickNavItem(navItem: INavItem) {
+    this.router.navigate([navItem.link]);
+  }
+
+  selectNavItem(id: string) {
     const activeNavItem = this.navItems.find(item => item.active);
-    if (activeNavItem && activeNavItem.title !== navItem.title) {
+    if (activeNavItem && activeNavItem.id !== id) {
       activeNavItem.active = false;
     }
-    this.router.navigate([navItem.link]);
-    navItem.active = true;
+
+    const navItem = this.navItems.find(item => item.id === id);
+    if (navItem) {
+      navItem.active = true;
+    }
   }
 
   // onToggleMenu(toggler: HTMLInputElement) {

@@ -4,7 +4,7 @@ import { debounceTime, tap } from 'rxjs/operators';
 
 import { IBook, IBookSearchFilter } from '../models';
 
-import { CatalogueService } from '../services';
+import { CatalogueService, EventService } from '../services';
 
 @Component({
   selector: 'app-catalogue',
@@ -23,9 +23,11 @@ export class CatalogueComponent implements OnInit {
   });
   public isAddFilterOpen = true;
 
-  constructor(private catalogueService: CatalogueService) { }
+  constructor(private catalogueService: CatalogueService,
+              private eventService: EventService) { }
 
   ngOnInit() {
+    this.eventService.pageOpen.emit('catalogue');
     this.searchForm.get('title').valueChanges
       .pipe(debounceTime(this.DEBOUNCE_TIME))
       .subscribe(text => this.searchTextChanged(text));

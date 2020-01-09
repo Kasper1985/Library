@@ -5,15 +5,22 @@
       <kendo-textbox-container floatingLabel="Email">
         <input kendoTextBox formControlName="email"/>
       </kendo-textbox-container>
+      <div *ngIf="this.loginForm.get('email').invalid && (this.loginForm.get('email').dirty || this.loginForm.get('email').touched)" class="alert alert-danger">
+        <span *ngIf="this.loginForm.get('email').errors.required">Email is required</span>
+        <span *ngIf="this.loginForm.get('email').errors.email">Must be an email</span>
+      </div>
       <kendo-textbox-container floatingLabel="Password">
         <input kendoTextBox type="password" formControlName="password" autocomplete="new-password"/>
       </kendo-textbox-container>
+      <div *ngIf="this.loginForm.get('password').invalid && (this.loginForm.get('password').dirty || this.loginForm.get('password').touched)" class="alert alert-danger">
+        <span *ngIf="this.loginForm.get('password').errors.required">Password is required</span>
+      </div>
       <div class="buttons">
         <button [disabled]="loading" kendoButton [primary]="true">
           <span *ngIf="loading" class="k-i-loading"></span>
           Login
         </button>
-        <span (click)="toggleRegister()">Register</span>
+        <span (click)="this.isLogin = !this.isLogin">Register</span>
       </div>
     </form>
   </section>
@@ -41,7 +48,7 @@
           <span *ngIf="loading" class="k-i-loading"></span>
           Register
         </button>
-        <span (click)="toggleRegister()">Cancel</span>
+        <span (click)="this.isLogin = !this.isLogin">Cancel</span>
       </div>
     </form>
   </section>

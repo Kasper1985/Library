@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormControl, AbstractControl, ValidatorFn } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { AuthService } from '../services';
+import { AuthService, EventService } from '../services';
 
 @Component({
   selector: 'app-login',
@@ -17,10 +17,10 @@ export class LoginComponent implements OnInit {
   public submitted = false;
   public isLogin = true;
 
-  constructor(private formBuilder: FormBuilder,
-              private route: ActivatedRoute,
+  constructor(private route: ActivatedRoute,
               private router: Router,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private eventService: EventService) {
     // redirect to home if already logged in
     if (this.authService.loggedInUser) {
       this.router.navigate(['/']);
@@ -28,24 +28,27 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loginForm = this.formBuilder.group({
-      email: ['', Validators.required, Validators.email],
-      password: ['', Validators.required]
+    this.eventService.pageOpen.emit('');
+    this.loginForm = new FormGroup({
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required])
     });
-    this.registerForm = this.formBuilder.group({
-      nameFirst: ['', Validators.required],
-      nameLast: ['', Validators.required],
-      email: ['', Validators.required, Validators.email],
-      password: ['', Validators.required],
-      passwordConfirm: ['', Validators.required]
+
+    this.registerForm = new FormGroup({
+      nameFirst: new FormControl('', [Validators.required]),
+      nameLast: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [ Validators.required,
+        Validators.minLength(8),
+        Validators.pattern(/[a-z]/g),
+        Validators.pattern(/[A-Z]/g),
+        Validators.pattern(/[ [!@#$%^&*()_+-=[]{};':"|,.<>\/?]/g)
+      ]),
+      passwordConfirm: new FormControl('', [Validators.required, this.equalsToValidator('password')])
     });
 
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
-  }
-
-  toggleRegister() {
-    this.isLogin = !this.isLogin;
   }
 
   logIn() {
@@ -64,7 +67,12 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  register() {
+  register() { }
 
+  private equalsToValidator(controlName: string): ValidatorFn {
+    return (control: AbstractControl): {[ key: string ]: any } | null => {
+      const value = control.parent.get(controlName).value;
+      return value !== control.value ? { 'notEqual': { value: control.value, target: value }} : null;
+    };
   }
 }
