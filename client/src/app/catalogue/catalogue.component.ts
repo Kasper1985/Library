@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { debounceTime, tap } from 'rxjs/operators';
 
-import { IBook } from '../models';
+import { IBook, IBookSearchFilter } from '../models';
+
+import { CatalogueService } from '../services';
 
 @Component({
   selector: 'app-catalogue',
@@ -14,13 +16,17 @@ export class CatalogueComponent implements OnInit {
 
   public books: IBook[];
   public searchForm = new FormGroup({
-    searchText: new FormControl('', Validators.required)
+    title: new FormControl('', Validators.required),
+    author: new FormControl(''),
+    year: new FormControl(''),
+    exists: new FormControl('even')
   });
+  public isAddFilterOpen = true;
 
-  constructor() { }
+  constructor(private catalogueService: CatalogueService) { }
 
   ngOnInit() {
-    this.searchForm.get('searchText').valueChanges
+    this.searchForm.get('title').valueChanges
       .pipe(debounceTime(this.DEBOUNCE_TIME))
       .subscribe(text => this.searchTextChanged(text));
   }
@@ -31,12 +37,18 @@ export class CatalogueComponent implements OnInit {
     }
   }
 
+  existingSelectedChange(state: boolean | 'event') {
+    this.searchForm.get('exists').setValue(state);
+  }
+
   search() {
-    this.books = [
-      { id: 1, title: 'Dark Tower', author: 'Steven King', year: 1982, exists: false },
-      { id: 2, title: 'Відьмак', author: 'А́нджей Сапко́вський', year: 1994, exists: false },
-      { id: 3, title: 'Годі, діточки, вам спать', author: 'О.Пчілка', year: 1991, exists: true },
-      { id: 4, title: 'Деловые люди', author: 'О.Генри', year: 1998, exists: true }
-    ];
+    const filter: IBookSearchFilter = {
+      text: this.searchForm.get('title').value,
+      author: this.searchForm.get('author').value,
+      year: Number(this.searchForm.get('year').value),
+      existing: this.searchForm.get('exists').value
+    };
+
+    this.catalogueService.searchBooks(filter).subscribe(books => this.books = books);
   }
 }

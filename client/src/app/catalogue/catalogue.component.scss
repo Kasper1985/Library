@@ -5,10 +5,16 @@
 }
 
 form {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-filter {
   display: flex;
   align-items: flex-end;
 
-  .search-text {
+  .search-title {
     flex-grow: 1;
 
     input {
@@ -17,9 +23,115 @@ form {
     }
   }
 
-  .search-text + button {
+  .search-title + button {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     margin-right: .5em;
+  }
+
+  .filter-toggler {
+    span {
+      transition: transform .3s ease;
+    }
+
+    &.open span {
+      transform: rotateX(180deg);
+    }
+  }
+}
+
+.additional-filter {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  width: 100%;
+  transform: translateY(-100%);
+  opacity: 0;
+  z-index: -1;
+  transition: opacity .4s ease-out,
+              transform .3s ease-in;
+
+  &.open {
+    position: relative;
+    transform: translateY(0);
+    opacity: 1;
+    z-index: 0;
+    transition: opacity .4s ease-in,
+                transform .3s ease-out;
+  }
+
+  & > kendo-textbox-container {
+    width: initial;
+  }
+
+  & > kendo-buttongroup {
+    margin-top: 1em;
+  }
+}
+
+.book {
+  border: 1px solid rgba(0, 0, 0, .08);
+  border-radius: 2px;
+  cursor: pointer;
+  padding: 1em;
+  margin: 1em 0;
+  height: 5em;
+
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 4fr 13fr 3fr;
+  grid-template-areas: "cover title year" "cover author exists";
+  grid-gap: .5em;
+
+  div.g-a-cover {
+    background: #eaeaea;
+    position: relative;
+
+    &::before {
+      content: "COVER";
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      opacity: .6;
+      transform: translate(-50%, -50%) rotateZ(-65deg);
+    }
+  }
+
+  span[class^="g-a-"] {
+    font-size: 10pt;
+    display: flex;
+    align-items: center;
+    height: 100%;
+
+    &.k-i-x {
+      color: red;
+    }
+
+    &.k-i-check {
+      color: green;
+    }
+
+    &.k-i-x::before,
+    &.k-i-check::before {
+      font-size: 16pt;
+      align-self: center;
+    }
+  }
+
+  .g-a-cover {
+    grid-area: cover;
+  }
+  .g-a-title {
+    grid-area: title;
+  }
+  .g-a-author {
+    grid-area: author;
+  }
+  .g-a-year {
+    grid-area: year;
+  }
+  .g-a-exists {
+    grid-area: exists;
   }
 }

@@ -12,7 +12,9 @@
 
   "CATALOGUE": {
     "FILTER": {
-      "TITLE": "Titel"
+      "TITLE": "Titel",
+      "AUTHOR": "Autor",
+      "YEAR": "Jahr"
     }
   }
 }

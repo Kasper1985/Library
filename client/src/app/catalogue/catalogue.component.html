@@ -1,19 +1,43 @@
 <div class="content">
   <form [formGroup]="this.searchForm" (submit)="search()">
-    <kendo-textbox-container floatingLabel="{{ 'CATALOGUE.FILTER.TITLE' | translate }}" class="search-text">
-      <input kendoTextBox formControlName="searchText" />
-    </kendo-textbox-container>
-    <button kendoButton [primary]="true" type="submit">S</button>
-    <span>&lt;</span>
+    <div class="main-filter">
+      <kendo-textbox-container floatingLabel="{{ 'CATALOGUE.FILTER.TITLE' | translate }}" class="search-title">
+        <input kendoTextBox formControlName="title" />
+      </kendo-textbox-container>
+      <button kendoButton [primary]="true" [icon]="'search'"></button>
+      <button kendoButton type="button" [icon]="'arrow-60-down'" look="flat" (click)="this.isAddFilterOpen = !this.isAddFilterOpen" class="filter-toggler" [class.open]="this.isAddFilterOpen"></button>
+    </div>
+    <div class="additional-filter" [class.open]="this.isAddFilterOpen">
+      <kendo-textbox-container floatingLabel="{{ 'CATALOGUE.FILTER.AUTHOR' | translate }}">
+        <input kendoTextBox formControlName="author" />
+      </kendo-textbox-container>
+      <kendo-textbox-container floatingLabel="{{ 'CATALOGUE.FILTER.YEAR' | translate }}">
+        <input kendoTextBox formControlName="year" />
+      </kendo-textbox-container>
+      <kendo-buttongroup [selection]="'single'">
+        <button kendoButton [toggleable]="true" type="button" [selected]="true" (selectedChange)="existingSelectedChange('even')">All</button>
+        <button kendoButton [toggleable]="true" type="button" (selectedChange)="existingSelectedChange(true)">
+          <span class="k-icon k-i-check"></span>
+          Existing
+        </button>
+        <button kendoButton [toggleable]="true" type="button" (selectedChange)="existingSelectedChange(false)">
+          <span class="k-icon k-i-x"></span>
+          Missing
+        </button>
+      </kendo-buttongroup>
+    </div>
   </form>
 
   <section class="result">
     <div class="book" *ngFor="let book of books">
-      <img class="book-cover" src="{{book.cover}}" alt="{{book.title}}"/>
-      <span class="book-title">{{book.title}}</span>
-      <span class="book-author">{{book.author}}</span>
-      <span class="book-year">{{book.year}}</span>
-      <span class="book-exists">{{book.exists}}</span>
+      <img *ngIf="book.cover" class="g-a-cover" src="{{book.cover}}" alt="{{book.title}}"/>
+      <div *ngIf="!book.cover" class="g-a-cover"></div>
+
+      <span class="g-a-title">{{book.title}}</span>
+      <span class="g-a-author">{{book.author}}</span>
+
+      <span class="g-a-year">{{book.year}}</span>
+      <span class="g-a-exists k-icon" [ngClass]="{'k-i-check': book.exists, 'k-i-x': !book.exists}"></span>
     </div>
   </section>
 </div>
