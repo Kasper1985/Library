@@ -16,12 +16,12 @@ export class CatalogueComponent implements OnInit {
 
   public books: IBook[];
   public searchForm = new FormGroup({
-    title: new FormControl('', Validators.required),
+    title: new FormControl(''),
     author: new FormControl(''),
-    year: new FormControl(''),
+    year: new FormControl('', Validators.pattern('^\\d*$')),
     exists: new FormControl('even')
   });
-  public isAddFilterOpen = true;
+  public isAddFilterOpen = false;
 
   constructor(private catalogueService: CatalogueService,
               private eventService: EventService) { }

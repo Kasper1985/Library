@@ -4,8 +4,9 @@
 $user-avatar-size         : 40px;
 
 // Hamburger
-$hamburger-layer-height   : 4px;
-$hamburger-layer-spacing  : 6px;
+$hamburger-layer-width    : 25px;
+$hamburger-layer-height   : 3px;
+$hamburger-layer-spacing  : 5px;
 $hamburger-color          : black;
 
 .header {
@@ -30,7 +31,7 @@ $hamburger-color          : black;
   transition-timing-function: linear;
 
   .hamburger-box {
-    width: 30px;
+    width: $hamburger-layer-width;
     height: $hamburger-layer-height * 3 + $hamburger-layer-spacing * 2;
     display: inline-block;
     position: relative;
@@ -105,7 +106,11 @@ img {
 
 section {
   display: flex;
-  align-items: center;
+  align-items: baseline;
+
+  h2 {
+    margin: 0;
+  }
 }
 
 .user-name {

@@ -19,19 +19,19 @@ body {
     grid-template-columns: auto 1fr;
     grid-template-areas: "top-bar top-bar" "side-bar content" "bottom-bar bottom-bar";
 
-    .top-bar {
+    .area-top-bar {
       grid-area: top-bar;
     }
 
-    .side-bar {
+    .area-side-bar {
       grid-area: side-bar;
     }
 
-    .content {
+    .area-content {
       grid-area: content;
     }
 
-    .bottom-bar {
+    .area-bottom-bar {
       grid-area: bottom-bar;
     }
   }

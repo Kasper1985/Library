@@ -4,23 +4,23 @@
     <form [formGroup]="loginForm" (submit)="logIn()">
       <kendo-textbox-container floatingLabel="Email">
         <input kendoTextBox formControlName="email"/>
+        <div *ngIf="this.loginForm.get('email').invalid && (this.loginForm.get('email').dirty || this.loginForm.get('email').touched)" class="validation-error">
+          <span *ngIf="this.loginForm.get('email').errors.required">Email is required</span>
+          <span *ngIf="this.loginForm.get('email').errors.email">Email is not valid</span>
+        </div>
       </kendo-textbox-container>
-      <div *ngIf="this.loginForm.get('email').invalid && (this.loginForm.get('email').dirty || this.loginForm.get('email').touched)" class="alert alert-danger">
-        <span *ngIf="this.loginForm.get('email').errors.required">Email is required</span>
-        <span *ngIf="this.loginForm.get('email').errors.email">Must be an email</span>
-      </div>
       <kendo-textbox-container floatingLabel="Password">
         <input kendoTextBox type="password" formControlName="password" autocomplete="new-password"/>
+        <div *ngIf="this.loginForm.get('password').invalid && (this.loginForm.get('password').dirty || this.loginForm.get('password').touched)" class="validation-error">
+          <span *ngIf="this.loginForm.get('password').errors.required">Password is required</span>
+        </div>
       </kendo-textbox-container>
-      <div *ngIf="this.loginForm.get('password').invalid && (this.loginForm.get('password').dirty || this.loginForm.get('password').touched)" class="alert alert-danger">
-        <span *ngIf="this.loginForm.get('password').errors.required">Password is required</span>
-      </div>
       <div class="buttons">
         <button [disabled]="loading" kendoButton [primary]="true">
           <span *ngIf="loading" class="k-i-loading"></span>
           Login
         </button>
-        <span (click)="this.isLogin = !this.isLogin">Register</span>
+        <span (click)="this.isLogin = !this.isLogin" class="link">Register</span>
       </div>
     </form>
   </section>
@@ -30,25 +30,47 @@
     <form [formGroup]="registerForm" (submit)="register()">
       <kendo-textbox-container floatingLabel="First name">
         <input kendoTextBox formControlName="nameFirst" />
+        <div *ngIf="this.registerForm.get('nameFirst').invalid && (this.registerForm.get('nameFirst').dirty || this.registerForm.get('nameFirst').touched)" class="validation-error">
+          <span *ngIf="this.registerForm.get('nameFirst').errors.required">First name is required</span>
+        </div>
       </kendo-textbox-container>
       <kendo-textbox-container floatingLabel="Last name">
-        <input kendoTextBox fromControlName="nameLast" />
+        <input kendoTextBox formControlName="nameLast" />
+        <div *ngIf="this.registerForm.get('nameLast').invalid && (this.registerForm.get('nameLast').dirty || this.registerForm.get('nameLast').touched)" class="validation-error">
+          <span *ngIf="this.registerForm.get('nameLast').errors.required">Last name is required</span>
+        </div>
       </kendo-textbox-container>
       <kendo-textbox-container floatingLabel="Email">
         <input kendoTextBox formControlName="email" />
+        <div *ngIf="this.registerForm.get('email').invalid && (this.registerForm.get('email').dirty || this.registerForm.get('email').touched)" class="validation-error">
+          <span *ngIf="this.registerForm.get('email').errors.required">Email is required</span>
+          <span *ngIf="this.registerForm.get('email').errors.email">Email is not valid</span>
+        </div>
       </kendo-textbox-container>
       <kendo-textbox-container floatingLabel="Password">
         <input kendoTextBox formControlName="password" type="password" autocomplete="new-password" />
+        <div *ngIf="this.registerForm.get('password').invalid && (this.registerForm.get('password').dirty || this.registerForm.get('password').touched)" class="validation-error">
+          <span *ngIf="this.registerForm.get('password').errors.required">Password is required</span>
+          <span *ngIf="this.registerForm.get('password').errors.minCapLetters">Password small letters length not reached: {{this.registerForm.get('password').errors.minCapLetters.requiredLength}}</span>
+          <span *ngIf="this.registerForm.get('password').errors.minNumbers">Password numbers length not reached: {{this.registerForm.get('password').errors.minNumbers.requiredLength}}</span>
+          <span *ngIf="this.registerForm.get('password').errors.minSmallLetters">Password small letters length not reached: {{this.registerForm.get('password').errors.minSmallLetters.requiredLength}}</span>
+          <span *ngIf="this.registerForm.get('password').errors.minSymbols">Password symbols length not reached: {{this.registerForm.get('password').errors.minSymbols.requiredLength}}</span>
+          <span *ngIf="this.registerForm.get('password').errors.minlength">Password length not reached: {{this.registerForm.get('password').errors.minlength.requiredLength}}</span>
+        </div>
       </kendo-textbox-container>
       <kendo-textbox-container floatingLabel="Confirm password">
         <input kendoTextBox formControlName="passwordConfirm" type="password" />
+        <div *ngIf="this.registerForm.get('passwordConfirm').invalid && (this.registerForm.get('passwordConfirm').dirty || this.registerForm.get('passwordConfirm').touched)" class="validation-error">
+          <span *ngIf="this.registerForm.get('passwordConfirm').errors.required">Password confirmation is required</span>
+          <span *ngIf="this.registerForm.get('passwordConfirm').errors.fieldMismatch">Password confirmation not matches the password</span>
+        </div>
       </kendo-textbox-container>
       <div class="buttons">
         <button [disabled]="loading" kendoButton [primary]="true">
           <span *ngIf="loading" class="k-i-loading"></span>
           Register
         </button>
-        <span (click)="this.isLogin = !this.isLogin">Cancel</span>
+        <span (click)="this.isLogin = !this.isLogin" class="link">Cancel</span>
       </div>
     </form>
   </section>
