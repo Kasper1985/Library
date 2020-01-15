@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
+import { tap } from 'rxjs/operators';
+
+import { environment } from 'src/environments/environment';
 
 import { IUser } from '../models';
 import { CookieService } from './cookie.service';
@@ -10,7 +14,8 @@ export class AuthService {
   private readonly STORAGE_USER = 'user';
 
   constructor(private cookieService: CookieService,
-              private eventService: EventService) {}
+              private eventService: EventService,
+              private httpClient: HttpClient) {}
 
   /**
    * Currently logged in user.
@@ -22,26 +27,12 @@ export class AuthService {
   /**
    * User login process provider.
    */
-  public login(login: string, password: string): Observable<IUser> {
+  public login(email: string, password: string): Observable<any> {
     // Do login request and get user data
-
-    // Mockup user for testing
-    const user: IUser = {
-      id: 123,
-      salutation: 'Mr.',
-      nameFirst: 'Yuriy',
-      nameLast: 'Varshavskyy',
-      email: login
-    };
-
-    if (user) {
-      localStorage.setItem(this.STORAGE_USER, JSON.stringify(user));
-    } else {
-      localStorage.removeItem(this.STORAGE_USER);
-    }
-    this.eventService.userLoggedInEvent.emit(user);
-
-    return of(user);
+    return this.httpClient.post<any>(environment.api + '/user/login', {email, password})
+                          .pipe(
+                            tap(data => this.getUserInfo(data.access_token)),
+                          );
   }
 
   /**
@@ -50,5 +41,10 @@ export class AuthService {
   public logout() {
     localStorage.removeItem(this.STORAGE_USER);
     this.eventService.userLoggedInEvent.emit(null);
+  }
+
+  private getUserInfo(id: number) {
+    this.httpClient.get<any>(`${environment.api}/user/${id}`)
+                   .subscribe(user => localStorage.setItem(this.STORAGE_USER, JSON.stringify(user)));
   }
 }

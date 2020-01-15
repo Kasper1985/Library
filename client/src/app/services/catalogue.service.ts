@@ -1,18 +1,27 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
+
+import { environment } from 'src/environments/environment';
 
 import { IBook, IBookSearchFilter } from '../models';
 import { CookieService } from './cookie.service';
 
 @Injectable({providedIn: 'root'})
 export class CatalogueService {
-  constructor(private cookieService: CookieService) {
+  private api = `${environment}/book`;
+
+  constructor(private cookieService: CookieService,
+              private httpClient: HttpClient) {
   }
 
   public searchBooks(filter: IBookSearchFilter): Observable<IBook[]> {
+    return this.httpClient.post<IBook[]>(`${environment}/book/filter`, filter);
+
     // tslint:disable-next-line:max-line-length
     // https://docs.google.com/spreadsheets/d/1dmzonyit4dBNSpoPzF_D82wSE6LxsoDWHmzpvxMNUjY/edit?fbclid=IwAR1l8Y-cTQaWuL61JEx8Hx9zc_yJJwa1C0d1bw9l2do2rTeaLde2J8EV5fs#gid=0
 
+    /*
     const books: IBook[] = [
       { id: '1', title: 'Dark Tower', author: 'Steven King', year: 1982, exists: false },
       { id: '2', title: 'Відьмак', author: 'А́нджей Сапко́вський', year: 1994, exists: false },
@@ -31,5 +40,11 @@ export class CatalogueService {
       (filter.year ? book.year === filter.year : true) &&
       (filter.existing !== undefined && filter.existing !== 'even' ? book.exists === filter.existing : true)
     ));
+
+    */
+  }
+
+  public getBook(id: string): Observable<IBook> {
+    return this.httpClient.get<IBook>(`${environment}/book/${id}`);
   }
 }

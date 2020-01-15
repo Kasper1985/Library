@@ -66,11 +66,10 @@ export class LoginComponent implements OnInit {
     }
 
     this.loading = true;
-    this.authService.login(this.loginForm.controls.email.value, this.loginForm.controls.password.value).subscribe(user => {
-      this.router.navigate([this.returnUrl]);
-    }, error => {
-      this.loading = false;
-    });
+    this.authService.login(this.loginForm.controls.email.value, this.loginForm.controls.password.value)
+                    .subscribe(
+                      () => { this.router.navigate([this.returnUrl]); },
+                      error => { this.loading = false; });
   }
 
   register() { }
