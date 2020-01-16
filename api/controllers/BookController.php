@@ -67,7 +67,7 @@ class BookController extends Controller {
 
 	/************* Helper functions *************/
 	private function validateBooksFilter($filter) {
-		if (!isset($filter['title'])) {
+		if (!isset($filter['text'])) {
       return false;
     }
     return true;

@@ -7,11 +7,15 @@ use Gateways\Gateway;
 
 class BookGateway extends Gateway {
 	public function searchBooks($filter) {
-		$query = 'SELECT id, title, author, year, available FROM books WHERE title LIKE ifnull(:title, title) AND author LIKE ifnull(:author, author) AND year = ifnull(:year, year) AND available = ifnull(:available, available)';
+		$query = 'SELECT id, title, author, year, available FROM books WHERE 1 '
+						.'AND (:text IS NULL OR title LIKE :text) '
+						.'AND (:author IS NULL OR author LIKE :author) '
+						.'AND (:year IS NULL OR year = :year) '
+						.'AND (:available IS NULL OR available = :available)';
 		try	{
 			$stmt = $this->db->prepare($query);
-			$title = isset($filter['title']) ? '%'.$filter['title'].'%' : null;
-			$stmt->bindParam(':title', $title);
+			$title = isset($filter['text']) ? '%'.$filter['text'].'%' : null;
+			$stmt->bindParam(':text', $title);
 			$author = isset($filter['author']) ? '%'.$filter['author'].'%' : null;
 			$stmt->bindParam(':author', $author);
 			$year = isset($filter['year']) ? $filter['year'] : null;
@@ -28,7 +32,7 @@ class BookGateway extends Gateway {
 					$book->id = $row['id'];
 					$book->title = $row['title'];
 					$book->author = $row['author'];
-					$book->year = (int) $row['year'];
+					$book->year = $row['year'] ? (int) $row['year'] : null;
 					$book->available = $row['available'] == 1;
 					$books[] = $book;
 				}
@@ -40,30 +44,5 @@ class BookGateway extends Gateway {
 		}
 	}
 }
-
-/*
-$stmt = $db->prepare("SELECT * FROM books WHERE title LIKE :text");
-$text = '%'.$_GET["title"].'%';
-$stmt->bindParam(':text', $text);
-$stmt->execute();
-$result = $stmt->fetchAll();
-
-class Book {}
-$books = array();
-
-foreach($result as $row) {
-    $b = new Book();
-    $b->id = $row['id'];
-    $b->title = $row['title'];
-    $b->author = $row['author'];
-    $b->year = $row['year'];
-    $b->available = $row['available'] == 1;
-    $books[] = $b;
-}
-
-header('Content-Type: application/json');
-header("Access-Control-Allow-Origin: *");
-echo json_encode($books, JSON_UNESCAPED_UNICODE);
-*/
 
 ?>

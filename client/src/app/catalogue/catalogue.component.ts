@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { debounceTime, tap } from 'rxjs/operators';
 
-import { IBook, IBookSearchFilter } from '../models';
+import { IBook } from '../models';
 
 import { CatalogueService, EventService } from '../services';
 
@@ -39,16 +39,16 @@ export class CatalogueComponent implements OnInit {
     }
   }
 
-  existingSelectedChange(state: boolean | 'event') {
+  existingSelectedChange(state: boolean | 'even') {
     this.searchForm.get('exists').setValue(state);
   }
 
   search() {
-    const filter: IBookSearchFilter = {
+    const filter = {
       text: this.searchForm.get('title').value,
-      author: this.searchForm.get('author').value,
-      year: Number(this.searchForm.get('year').value),
-      existing: this.searchForm.get('exists').value
+      author: this.searchForm.get('author').value ? this.searchForm.get('author').value : undefined,
+      year: this.searchForm.get('year').value ? Number(this.searchForm.get('year').value) : undefined,
+      existing: this.searchForm.get('exists').value !== 'even' ? this.searchForm.get('exists').value : undefined,
     };
 
     this.catalogueService.searchBooks(filter).subscribe(books => this.books = books);
