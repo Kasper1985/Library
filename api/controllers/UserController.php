@@ -6,6 +6,7 @@ use Models\Token;
 use Models\User;
 use Logic\UserLogic;
 use Controllers\Controller;
+use Authorization\TokenProvider;
 
 class UserController extends Controller {
   private $userGateway;
@@ -15,8 +16,11 @@ class UserController extends Controller {
     $this->userLogic = new UserLogic($this->db);
   }
 
+
+
   public function processRequest() {
     switch ($this->requestMethod) {
+      /************************************ GET ************************************/
       case 'GET':
         if (isset($this->route[0])) {
           switch ($this->route[0]) {
@@ -24,6 +28,7 @@ class UserController extends Controller {
               $id = $this->route[1];
               $response = $this->registerUser($id);
               break;
+
             default:                          // GET /user/{id}
               $id = (int) $this->route[0];
               $response = $this->getUser($id);
@@ -34,6 +39,7 @@ class UserController extends Controller {
         }
         break;
 
+      /************************************ POST ************************************/
       case 'POST':
         if (isset($this->route[0])) {
           switch ($this->route[0]) {
@@ -50,14 +56,17 @@ class UserController extends Controller {
         }
         break;
 
+      /************************************ PUT ************************************/
       case 'PUT':
         $response = $this->id ? $this->updateUser($this->id) : $this->unprocessableEntityResponse();
         break;
 
+      /************************************ DELETE ************************************/
       case 'DELETE':
         $response = $this->id ? $this->deleteUser($this->id) : $this->unprocessableEntityResponse();
         break;
 
+      
       default:
         $response = $this->notFoundResponse();
         break;
@@ -69,6 +78,8 @@ class UserController extends Controller {
     }
   }
 
+
+  /************************************ Execution function ************************************/
   private function createUser() {
     $data = json_decode(file_get_contents('php://input'), true);
     if (!$this->validateUser($data)) {
@@ -88,9 +99,10 @@ class UserController extends Controller {
   }
 
   private function getUser($id) {
-
-    if (($result = $this->authorize()) != null) {
-      return $result;
+    try {
+      TokenProvider::readToken();
+    } catch (\Throwable $th) {
+      return $this->unauthorizedResponse(json_encode(['Access denied' => $th->getMessage()]));
     }
 
     $user = $this->userLogic->getUser($id);
@@ -100,10 +112,14 @@ class UserController extends Controller {
     }
 
     // Hide password of user
-    $user->password = '';
+    $user->password = '*********';
     return $this->successResponse(json_encode($user, JSON_UNESCAPED_UNICODE));
   }
 
+  /**
+   * Checks user credentials and provides an access token in case of successful login
+   * @return Array An access token data
+   */
   private function loginUser() {
     $credentials = json_decode(file_get_contents('php://input'), true);
     if (!$this->validateCredentials($credentials)) {
@@ -111,7 +127,13 @@ class UserController extends Controller {
     }
 
     if ($user = $this->userLogic->login($credentials['email'], $credentials['password'])) {
-      return $this->successResponse(json_encode($this->generateToken($user), JSON_UNESCAPED_UNICODE));
+      $expire = 24 * 60 * 60 - 1; // 24h = 86.399s
+      $access_token = TokenProvider::generateToken($user, $expire);
+      return $this->successResponse(json_encode([
+        'access_token' => $access_token,
+        'token_type' => 'Bearer',
+        'expires_in' => $expire
+      ], JSON_UNESCAPED_UNICODE));
     }
 
     return $this->unauthorizedResponse(json_encode(['error' => 'Invalid login or password']));
@@ -131,7 +153,7 @@ class UserController extends Controller {
   }
 
 
-  /************* Helper functions *************/
+  /************************************ Validations functions ************************************/
   private function validateCredentials($credentials) {
     if (!isset($credentials['email'])) {
       return false;
@@ -157,34 +179,6 @@ class UserController extends Controller {
     }
 
     return true;
-  }
-
-  /**
-   * Generates a JWT token based on user data
-   * @param user User to be taken for generating token claims
-   */
-  private function generateToken($user) {
-    // Create token header as a JSON string and encode to base64
-    $header = json_encode(['typ' => 'JWT', 'alg' => 'HS256']);
-    $header = $this->base64UrlEncode($header);
-
-    // Create token payload as a JSON string and encode to base64
-    $payload = json_encode(['user_id' => $user->id, 'name' => $user->nameFirst.' '.$user->nameLast, 'iat' => time(), 'role' => 'user', 'scopes' => 'book', ]);
-    $payload = $this->base64UrlEncode($payload);
-
-    // Create signature hash and encode to base64
-    $signature = hash_hmac('sha256', $header.'.'.$payload, '9PN$E@e33k6nC2$e', true);
-    $signature = $this->base64UrlEncode($signature);
-
-    return new Token($header.'.'.$payload.'.'.$signature, 'bearer', 3600); // Expires in 1h = 3600s
-  }
-
-  /**
-   * Generate a base64 url encoded string
-   * @param str String to be encoded
-   */
-  private function base64UrlEncode($str) {
-    return str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($str));
   }
 }
 

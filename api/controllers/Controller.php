@@ -1,10 +1,14 @@
 <?php
 
 namespace Controllers;
+
+use Authorization\TokenProvider;
+
 abstract class Controller {
 	protected $db;
 	protected $requestMethod;
-	protected $route;
+  protected $route;
+  protected $payload;
 
 	public function __construct($db, $requestMethod, $route) {
 		$this->db = $db;
@@ -17,22 +21,7 @@ abstract class Controller {
   abstract protected function initialize();
   abstract public function processRequest();
   
-  /********************** Authorization **********************/
-  protected function authorize($role = null) {
-    if (!isset($_SERVER['HTTP_AUTHORIZATION'])) {
-      return $this->unauthorizedResponse();
-    }
-
-    //TODO: check token
-    //TODO: extract claims
-    //TODO: check role
-
-    return null;
-  }
-
-
-
-  /******************** Standard responses *******************/
+    /******************** Standard responses *******************/
   /* ====================== 200 Codes ====================== */
   protected function successResponse($body = null) {
     $response['status_code_header'] = 'HTTP/1.1 200 OK';
@@ -83,8 +72,4 @@ abstract class Controller {
     $response['body'] = null;
     return $response;
   }
-
-  
-
-  
 }
