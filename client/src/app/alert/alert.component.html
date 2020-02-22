@@ -1,0 +1,16 @@
+<section>
+  <article [@slideInOutUp] *ngIf="alert" class="alert" [ngClass]="{
+    'alert-info': this.alert.type === 'info',
+    'alert-warning': this.alert.type === 'warning',
+    'alert-error': this.alert.type === 'error',
+    'alert-question': this.alert.type === 'question'
+  }">
+    <span class="k-icon" [ngClass]="{
+      'k-i-info': this.alert.type === 'info',
+      'k-i-warning': this.alert.type === 'warning',
+      'k-i-x-outline': this.alert.type === 'error',
+      'k-i-question': this.alert.type === 'question'
+    }"></span>
+    <span class="message">{{this.alert.message}}</span>
+  </article>
+</section>

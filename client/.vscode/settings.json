@@ -1,6 +1,14 @@
 {
     "workbench.iconTheme": "material-icon-theme",
     "cSpell.words": [
-        "dropdownbutton"
-    ]
+        "dropdownbutton",
+        "dropdowns",
+        "esnext",
+        "metronic",
+        "scrollbar"
+    ],
+    "files.exclude": {
+        "**/.vscode": true,
+        "**/node_modules": true
+    }
 }

@@ -1,8 +1,8 @@
 // Angular modules
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Kendo UI
@@ -25,6 +25,7 @@ import { NavPanelComponent } from './nav-panel/nav-panel.component';
 
 import { LoginComponent } from './login/login.component';
 import { CatalogueComponent } from './catalogue/catalogue.component';
+import { AlertComponent } from './alert/alert.component';
 
 
 @NgModule({
@@ -35,11 +36,13 @@ import { CatalogueComponent } from './catalogue/catalogue.component';
     FooterComponent,
     NavPanelComponent,
     LoginComponent,
-    CatalogueComponent
+    CatalogueComponent,
+    AlertComponent
   ],
   imports: [
     // Angular modules
     BrowserModule,
+    BrowserAnimationsModule,
     ReactiveFormsModule,
     HttpClientModule,
 

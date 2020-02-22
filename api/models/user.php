@@ -7,7 +7,9 @@ class User {
     public string $nameFirst;
     public string $nameLast;
     public string $email;
-    public string $salutation;
+    public int $gender;
+    public string $password;
+    public \DateTime $registered;
 }
 
 ?>

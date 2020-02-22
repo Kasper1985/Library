@@ -5,7 +5,7 @@ export function pwdMinCapLettersValidator(count: number): ValidatorFn {
     const value = control.value as string;
     const letters = value ? value.match(/[A-Z]/g) : undefined;
     return letters && letters.length >= count ? null : {
-      'minCapLetters': {
+      minCapLetters: {
         requiredLength: count,
         actualLength: letters ? letters.length : 0
       }

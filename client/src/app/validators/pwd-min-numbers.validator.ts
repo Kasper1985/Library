@@ -5,7 +5,7 @@ export function pwdMinNumbersValidator(count: number): ValidatorFn {
     const value = control.value as string;
     const numbers = value ? value.match(/[0-9]/g) : undefined;
     return numbers && numbers.length >= count ? null : {
-      'minNumbers': {
+      minNumbers: {
         requiredLength: count,
         actualLength: numbers ? numbers.length : 0
       }

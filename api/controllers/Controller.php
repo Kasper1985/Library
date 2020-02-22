@@ -15,9 +15,24 @@ abstract class Controller {
 	}
 
   abstract protected function initialize();
-	abstract public function processRequest();
+  abstract public function processRequest();
+  
+  /********************** Authorization **********************/
+  protected function authorize($role = null) {
+    if (!isset($_SERVER['HTTP_AUTHORIZATION'])) {
+      return $this->unauthorizedResponse();
+    }
 
-  /***************** Standard responses *****************/
+    //TODO: check token
+    //TODO: extract claims
+    //TODO: check role
+
+    return null;
+  }
+
+
+
+  /******************** Standard responses *******************/
   /* ====================== 200 Codes ====================== */
   protected function successResponse($body = null) {
     $response['status_code_header'] = 'HTTP/1.1 200 OK';
@@ -34,6 +49,12 @@ abstract class Controller {
 
   protected function unauthorizedResponse($body = null) {
     $response['status_code_header'] = 'HTTP/1.1 401 Unauthorized';
+    $response['body'] = $body;
+    return $response;
+  }
+
+  protected function forbiddenResponse($body = null) {
+    $response['status_code_header'] = 'HTTP/1.1 403 Forbidden';
     $response['body'] = $body;
     return $response;
   }

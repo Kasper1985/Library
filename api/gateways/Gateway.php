@@ -1,6 +1,7 @@
 <?php
 
 namespace Gateways;
+
 abstract class Gateway {
     protected $db;
 

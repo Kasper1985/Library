@@ -2,6 +2,7 @@
 
 require_once '_db.php';
 require_once 'controllers/index.php';
+require_once 'logic/index.php';
 require_once 'gateways/index.php';
 require_once 'models/index.php';
 
@@ -16,7 +17,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = preg_replace('/^(\/)?api\//', '', $uri);
-$uri = explode( '/', $uri );
+$uri = explode('/', $uri);
 
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 

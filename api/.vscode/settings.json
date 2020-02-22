@@ -2,5 +2,8 @@
     "cSpell.words": [
         "errmode",
         "unprocessable"
-    ]
+    ],
+    "files.exclude": {
+        "**/.vscode": true
+    }
 }

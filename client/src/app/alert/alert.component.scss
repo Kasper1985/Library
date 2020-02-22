@@ -1,0 +1,50 @@
+.alert {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 15px;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+
+  &.alert-info {
+    background: green;
+    color: white;
+  }
+
+  &.alert-warning {
+    background: yellow;
+  }
+
+  &.alert-error {
+    background: red;
+    color: white;
+  }
+
+  &.alert-question {
+    background: blue;
+    color: white;
+  }
+
+  .k-icon {
+    font-size: 28pt;
+  }
+
+  .message {
+    flex-grow: 1;
+    padding-left: 1em;
+  }
+}
+
+
+@media screen and (min-width: 600px) {
+  .alert {
+    top: 4em;
+    left: 1em;
+    width: 250px;
+  }
+}

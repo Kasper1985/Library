@@ -2,10 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl, AbstractControl, ValidatorFn, ValidationErrors } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { AuthService, EventService } from '../services';
+import { AuthService, EventService, UserService } from '../services';
+
+import { IUser } from '../models';
 
 import { emailValidator, pwdMinSmallLettersValidator, pwdMinCapLettersValidator, pwdMinSymbolsValidator, pwdMinNumbersValidator,
-         fieldMatchValidator } from './../validators';
+  fieldMatchValidator } from './../validators';
+
 
 @Component({
   selector: 'app-login',
@@ -20,11 +23,13 @@ export class LoginComponent implements OnInit {
   public loading = false;
   public submitted = false;
   public isLogin = true;
+  public showValidationErrors = false;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
               private authService: AuthService,
-              private eventService: EventService) {
+              private eventService: EventService,
+              private userService: UserService) {
     if (this.authService.loggedInUser) { // redirect to home if already logged in
       this.router.navigate(['/']);
     }
@@ -62,6 +67,8 @@ export class LoginComponent implements OnInit {
 
     // stop here if form is invalid
     if (this.loginForm.invalid) {
+      this.showValidationErrors = true;
+      this.eventService.alert.emit({type: 'error', message: 'Invalid input'});
       return;
     }
 
@@ -69,8 +76,30 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.loginForm.controls.email.value, this.loginForm.controls.password.value)
                     .subscribe(
                       () => { this.router.navigate([this.returnUrl]); },
-                      error => { this.loading = false; });
+                      error => { this.loading = false; this.eventService.alert.emit({ type: 'error', message: 'Login failed' }); });
   }
 
-  register() { }
+  register() {
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.registerForm.invalid) {
+      this.showValidationErrors = true;
+      this.eventService.alert.emit({type: 'error', message: 'Invalid input'});
+      return;
+    }
+
+    const user: IUser = {
+      nameFirst: this.registerForm.controls.nameFirst.value,
+      nameLast: this.registerForm.controls.nameLast.value,
+      email: this.registerForm.controls.email.value,
+      password: this.registerForm.controls.password.value
+    };
+
+    this.loading = true;
+    this.userService.registerUser(user)
+                    .subscribe(
+                      () => { this.loading = false; this.isLogin = true; },
+                      error => { this.loading = false; this.eventService.alert.emit({ type: 'error', message: 'Registration failed' }); });
+  }
 }

@@ -5,7 +5,7 @@ export function pwdMinSymbolsValidator(count: number): ValidatorFn {
     const value = control.value as string;
     const symbols = value ? value.match(/[\s\\\/\[\]\-(){}<>!@#§$%^&*_+~=;':"|,.?]/g) : undefined;
     return symbols && symbols.length >= count ? null : {
-      'minSymbols': {
+      minSymbols: {
         requiredLength: count,
         actualLength: symbols ? symbols.length : 0
       }

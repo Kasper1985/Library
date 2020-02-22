@@ -9,8 +9,8 @@ $database = "3056782_library";
 
 $host = 'localhost';
 $port = 3306;
-$username = 'lib.user';
-$password = 'library';
+$username = 'library';
+$password = 'cnfhn0';
 $database = 'library';
 
 date_default_timezone_set("UTC");
