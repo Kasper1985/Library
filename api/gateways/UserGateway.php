@@ -40,7 +40,7 @@ class UserGateway extends Gateway {
 	}
 	
 	public function getUserById($id) {
-		$query = 'SELECT id, name_first, name_last, email, gender, registered, password FROM users WHERE id = :id';
+		$query = 'SELECT id, name_first, name_last, email, gender, registered, password, role FROM users WHERE id = :id';
 		try {
 			$stmt = $this->db->prepare($query);
 			$stmt->bindParam(':id', $id);
@@ -58,16 +58,18 @@ class UserGateway extends Gateway {
 				$user->gender = $result['gender'];
 				$user->registered = new \DateTime($result['registered']);
 				$user->password = $result['password'];
+				$user->role = $result['role'];
 			}
 
 			return $user;
 		} catch (\PDOException $e) {
-			exit($e->getMessage());
+			// exit($e->getMessage());
+			throw $e;
 		}
 	}
 
 	public function getUserByEmail($email) {
-		$query = 'SELECT id, name_first, name_last, email, gender, registered, password FROM users WHERE email = :email';
+		$query = 'SELECT id, name_first, name_last, email, gender, registered, password, role FROM users WHERE email = :email';
 		try {
 			$stmt = $this->db->prepare($query);
 			$stmt->bindParam(':email', $email);
@@ -85,6 +87,7 @@ class UserGateway extends Gateway {
 				$user->gender = $result['gender'];
 				$user->registered = new \DateTime($result['registered']);
 				$user->password = $result['password'];
+				$user->role = $result['role'];
 			}
 
 			return $user;
@@ -93,17 +96,17 @@ class UserGateway extends Gateway {
 		}
 	}
 
-	public function delete($id) {
+	public function deleteUser($id) {
 		$query = 'DELETE FROM users WHERE id = :id';
 		try {
 			$stmt = $this->db->prepare($query);
 			$stmt->bindParam(':id', $id);
 			$stmt->execute();
-			$result = $stmt->fetchAll();
 
 			return true;
 		} catch (\PDOException $e) {
-			exit($e->getMessage());
+			// exit($e->getMessage());
+			throw $e;
 		}
 	}
 }

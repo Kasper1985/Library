@@ -2,6 +2,8 @@
 
 namespace Logic;
 
+use Exception;
+
 use Models\User;
 use Gateways\UserGateway;
 use Logic\Logic;
@@ -28,12 +30,16 @@ class UserLogic extends Logic {
 
   public function getUser($key) {
     if (is_int($key)) {
-      return $this->userGateway->getUserById($key);
+      $user = $this->userGateway->getUserById($key);
     } else if (is_string($key)) {
-      return $this->userGateway->getUserById($id);
+      $user = $this->userGateway->getUserByEmail($key);
     } else {
       throw new Exception('Key for user search is invalid');
     }
+
+    // Hide user password
+    $user->password = '*********';
+    return $user;
   }
 
   public function login($email, $password) {
@@ -44,6 +50,23 @@ class UserLogic extends Logic {
     }
 
     return false;
+  }
+
+  public function editUser($user) {
+    throw new Exception('This method is not implemented yet');
+  }
+
+  public function deleteUser($id) {
+    try {
+      $user = $this->userGateway->getUserById($id);
+      if ($user != null) {
+        $this->userGateway->deleteUser($id);
+        return true;
+      }
+      return false;
+    } catch (\Throwable $th) {
+      return false;
+    }
   }
 }
 

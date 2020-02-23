@@ -10,6 +10,7 @@ class User {
     public int $gender;
     public string $password;
     public \DateTime $registered;
+    public int $role;
 }
 
 ?>

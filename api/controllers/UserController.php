@@ -2,6 +2,8 @@
 
 namespace Controllers;
 
+use Exception;
+
 use Models\Token;
 use Models\User;
 use Logic\UserLogic;
@@ -9,7 +11,6 @@ use Controllers\Controller;
 use Authorization\TokenProvider;
 
 class UserController extends Controller {
-  private $userGateway;
   private $userLogic;
 
   protected function initialize() {
@@ -30,7 +31,7 @@ class UserController extends Controller {
               break;
 
             default:                          // GET /user/{id}
-              $id = (int) $this->route[0];
+              $id = (int)$this->route[0];
               $response = $this->getUser($id);
               break;
           }
@@ -63,7 +64,12 @@ class UserController extends Controller {
 
       /************************************ DELETE ************************************/
       case 'DELETE':
-        $response = $this->id ? $this->deleteUser($this->id) : $this->unprocessableEntityResponse();
+        if (isset($this->route[0])) {
+          $id = (int)$this->route[0];
+          $response = $this->deleteUser($id);
+        } else {
+          $response = $this->unprocessableEntityResponse();
+        }
         break;
 
       
@@ -100,7 +106,10 @@ class UserController extends Controller {
 
   private function getUser($id) {
     try {
-      TokenProvider::readToken();
+      $payload = TokenProvider::readToken();
+      if (TokenProvider::getClaim($payload, 'sub') != $id && TokenProvider::getClaim($payload, 'role') < 1) {
+        throw new Exception('You are not allowed to get info about this user');
+      }
     } catch (\Throwable $th) {
       return $this->unauthorizedResponse(json_encode(['Access denied' => $th->getMessage()]));
     }
@@ -111,8 +120,6 @@ class UserController extends Controller {
       return $this->notFoundResponse();
     }
 
-    // Hide password of user
-    $user->password = '*********';
     return $this->successResponse(json_encode($user, JSON_UNESCAPED_UNICODE));
   }
 
@@ -140,16 +147,29 @@ class UserController extends Controller {
   }
 
   private function updateUser($id) {
+    try {
+      $payload = TokenProvider::readToken();
+      if (TokenProvider::getClaim($payload, 'sub') != $id && TokenProvider::getClaim($payload, 'role') < 1) {
+        throw new Exception('You are not allowed to change this user');
+      }
+    } catch (\Throwable $th) {
+      return $this->unauthorizedResponse(json_encode(['Access denied' => $th->getMessage()]));
+    }
+
     return $this->notImplementedResponse();
   }
 
   private function deleteUser($id) {
-    $result = $this->userGateway->find($id);
-    if (!$result) {
-      return $this->notFoundResponse();
+    try {
+      $payload = TokenProvider::readToken();
+      if (TokenProvider::getClaim($payload, 'sub') != $id && TokenProvider::getClaim($payload, 'role') < 1) {
+        throw new Exception('You are not allowed to change this user');
+      }
+    } catch (\Throwable $th) {
+      return $this->unauthorizedResponse(json_encode(['Access denied' => $th->getMessage()]));
     }
 
-    return $this->userGateway->delete($id) ? $this->successResponse() : $this->internalServerErrorResponse();
+    return $this->userLogic->deleteUser($id) ? $this->successResponse() : $this->internalServerErrorResponse();
   }
 
 

@@ -25,7 +25,8 @@ class TokenProvider {
       'iss' => 'ua-library.dx.am', 
       'iat' => time(),
       'exp' => time() + $expire,
-      'name' => $user->nameFirst.' '.$user->nameLast
+      'name' => $user->nameFirst.' '.$user->nameLast,
+      'role' => $user->role
     ]);
     $payload = self::base64UrlEncode($payload);
 
@@ -37,19 +38,14 @@ class TokenProvider {
   }
 
   /**
-   * Generate a base64 url encoded string
-   * @param str String to be encoded
-   * @return string Base64 url encoded string
-   */
-  private static function base64UrlEncode($str) {
-    return str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($str));
-  }
-
-  /**
    * Reads token from Authorization header
    * @return Array Payload of the token
    */
   public static function readToken() {
+    if (!isset($_SERVER['HTTP_AUTHORIZATION'])) {
+      throw new Exception('Anonym request is not allowed');
+    }
+
     try {
       list($type, $token) = explode(' ', $_SERVER['HTTP_AUTHORIZATION']);
       if ($type != 'Bearer') {
@@ -97,6 +93,15 @@ class TokenProvider {
       }
     }
     return null;
+  }
+
+  /**
+   * Generate a base64 url encoded string
+   * @param str String to be encoded
+   * @return string Base64 url encoded string
+   */
+  private static function base64UrlEncode($str) {
+    return str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($str));
   }
 }
 
